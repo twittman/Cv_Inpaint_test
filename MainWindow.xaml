@@ -32,19 +32,17 @@
                 <Viewbox Width="{Binding ActualWidth, ElementName=Input}"
                          Height="{Binding ActualHeight, ElementName=Input}">
                     <ScrollViewer x:Name="scrollViewer1"
+                                  Width="{Binding ActualWidth, ElementName=Input}"
+                                  Height="{Binding ActualHeight, ElementName=Input}"
                                   HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Auto">
                         <Canvas Name="leftCanvas"
                             RenderOptions.BitmapScalingMode="HighQuality"
                             MouseDown="Canvas_MouseDown" 
                             MouseMove="Canvas_MouseMove"
-                            Height="{Binding ActualHeight, ElementName=ImageImageImage}"
-                            Width="{Binding ActualHeight, ElementName=ImageImageImage}">
-                            <Image Name="ImageImageImage"
-                                    RenderOptions.BitmapScalingMode="HighQuality"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Stretch="Uniform"/>
+                            Height="{Binding ActualHeight, ElementName=Input}"
+                            Width="{Binding ActualHeight, ElementName=Input}">
+                            <Ellipse Name="cursor1" Fill="green" Width="9" Height="9"/>
                             <Canvas.Background>
                                 <SolidColorBrush Color="white" Opacity="100"/>
                             </Canvas.Background>
@@ -82,7 +80,8 @@
                         Margin="10,0,0,0"
                         Width="50"
                         Height="30"
-                        Content="Show"/>
+                        FontSize="9"
+                        Content="Show Mask"/>
                 <Button Click="ButtonSave"
                         HorizontalAlignment="Left"
                         Margin="10,0"
@@ -119,10 +118,29 @@
             <StackPanel Orientation="Horizontal">
                 <Button Click="ButtonProcess" 
                     HorizontalAlignment="Left" 
-                    Margin="20,20" 
+                    Margin="20,20,0,0" 
                     Width="50" 
                     Height="30"
                     Content="Process"/>
+                <Button Click="SmallRad"
+                    HorizontalAlignment="Left"
+                    Margin="20,20,0,0"
+                    Width="50"
+                    Height="30"
+                    Content="Small"/>
+                <Button Click="MediumRad"
+                    HorizontalAlignment="Left"
+                    Margin="20,20,0,0"
+                    Width="50"
+                    Height="30"
+                    Content="Medium"/>
+                <Button Click="LargeRad"
+                    HorizontalAlignment="Left"
+                    Margin="20,20,0,0"
+                    Width="50"
+                    Height="30"
+                    Content="Large"/>
+
             </StackPanel>
         </StackPanel>
     </StackPanel>

@@ -26,10 +26,13 @@ namespace inpaint
         List<OpenCvSharp.Point> inPaintCurrentPoints = null;
         bool inPaintSelection = false;
 
+        int brushRad = 11;
+
         System.Windows.Point currentPoint = new System.Windows.Point();
         // Opens image
         Mat inputImageCv;
         Mat copyOfMat;
+        
             void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -43,13 +46,26 @@ namespace inpaint
                 ImageBrush bgBrush = new ImageBrush();
                 bgBrush.ImageSource = MatToBitmapImage(inputImageCv);
 
-                ImageImageImage.Source = MatToBitmapImage(inputImageCv);
-                //leftCanvas.Background = bgBrush;
+                //ImageImageImage.Source = MatToBitmapImage(inputImageCv);
+                leftCanvas.Background = bgBrush;
                 //leftCanvas.Width = inputImageCv.Cols;
                 //leftCanvas.Height = inputImageCv.Rows;
                 //InputImage.Source = new BitmapImage(new Uri(op.FileName));
                 copyOfMat = inputImageCv.Clone();
             }
+        }
+
+        private void SmallRad(object sender, RoutedEventArgs e)
+        {
+            brushRad = 7;
+        }
+        private void MediumRad(object sender, RoutedEventArgs e)
+        {
+            brushRad = 13;
+        }
+        private void LargeRad(object sender, RoutedEventArgs e)
+        {
+            brushRad = 33;
         }
 
         private void Canvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -59,12 +75,20 @@ namespace inpaint
         }
         private void Canvas_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if (inPaintSelection == true && e.LeftButton == MouseButtonState.Pressed)
+            System.Windows.Point p = e.GetPosition(leftCanvas);
+            double pX = p.X;
+            double pY = p.Y;
+
+            Canvas.SetTop(cursor1, pY);
+            Canvas.SetLeft(cursor1, pX);
+            Cursor = Cursors.None;
+
+            if (inPaintSelection = true && e.LeftButton == MouseButtonState.Pressed)
             {
                 Ellipse nEllipse = new Ellipse();
                 nEllipse.Fill = System.Windows.Media.Brushes.Black;
-                nEllipse.Width = (int)11;
-                nEllipse.Height = (int)11;
+                nEllipse.Width = brushRad;
+                nEllipse.Height = brushRad;
                 Canvas.SetLeft(nEllipse, e.GetPosition(this).X);
                 Canvas.SetTop(nEllipse, e.GetPosition(this).Y);
                 leftCanvas.Children.Add(nEllipse);
@@ -158,7 +182,8 @@ namespace inpaint
             Mat mask1;
             mask1 = Cv2.ImRead("mask.png", ImreadModes.Grayscale);
             Cv2.Resize(mask1, mask1, maskSize);
-            Cv2.ImShow("window1", mask1);
+            Cv2.BitwiseNot(mask1, mask1);
+            Cv2.ImShow("Mask", mask1);
             Cv2.ImWrite("maskResized.png", mask1);
         }
 
@@ -183,8 +208,9 @@ namespace inpaint
             //OpenCvSharp.Rect cropLoc = new OpenCvSharp.Rect(0, 0, Width, Height);
             //Mat maskCropped = new Mat(mask, cropLoc);
             Cv2.Resize(mask, mask, maskSize);
+            Cv2.BitwiseNot(mask, mask);
 
-            Cv2.Inpaint(copyMatImage, mask, test, 16, InpaintMethod.NS);
+            Cv2.Inpaint(copyMatImage, mask, test, 7, InpaintMethod.NS);
             //OutputImage.Source = MatToBitmapImage(outputMatImage);
             OutputImage.Source = MatToBitmapImage(test);
         }
