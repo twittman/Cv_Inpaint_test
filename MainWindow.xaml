@@ -1,0 +1,129 @@
+﻿<Window x:Class="inpaint.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:inpaint"
+        mc:Ignorable="d" 
+        Title="inPainter" MaxHeight="1280" MaxWidth="1920" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
+    <!--MouseDown="Canvas_MouseDown" 
+    MouseMove="Canvas_MouseMove"-->
+
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,0,0,0"
+                Height="790"
+                Width="1200">
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Top"
+                    Margin="10,5,0,0"
+                    Height="770"
+                    Width="590">
+            <Border Name="Input"
+                BorderThickness="4"
+                CornerRadius="5"
+                BorderBrush="#80808080"
+                VerticalAlignment="top"
+                HorizontalAlignment="left"
+                Margin="8,16,0,0"
+                Width="572"
+                Height="640">
+                <Viewbox Width="{Binding ActualWidth, ElementName=Input}"
+                         Height="{Binding ActualHeight, ElementName=Input}">
+                    <ScrollViewer x:Name="scrollViewer1"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+                        <Canvas Name="leftCanvas"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            MouseDown="Canvas_MouseDown" 
+                            MouseMove="Canvas_MouseMove"
+                            Height="{Binding ActualHeight, ElementName=ImageImageImage}"
+                            Width="{Binding ActualHeight, ElementName=ImageImageImage}">
+                            <Image Name="ImageImageImage"
+                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Stretch="Uniform"/>
+                            <Canvas.Background>
+                                <SolidColorBrush Color="white" Opacity="100"/>
+                            </Canvas.Background>
+                        </Canvas>
+                    </ScrollViewer>
+                </Viewbox>
+            </Border>
+            <StackPanel Orientation="Horizontal">
+                <Button Click="Button_Click" 
+                        HorizontalAlignment="Left" 
+                        Margin="20,20" 
+                        Width="90" 
+                        Height="30" 
+                        Content="Open Image"/>
+                <Button Click="ZoomInClick" 
+                        HorizontalAlignment="Left"
+                        Margin="0,0"
+                        Width="50" 
+                        Height="30"
+                        Content="in"/>
+                <Button Click="ZoomOutClick" 
+                        HorizontalAlignment="Left"
+                        Margin="10,0"
+                        Width="50" 
+                        Height="30"
+                        Content="out"/>
+                <Button Click="AddMask"
+                        HorizontalAlignment="Left"
+                        Margin="150,0,0,0"
+                        Width="50"
+                        Height="30"
+                        Content="Mask"/>
+                <Button Click="ShowResizedMask"
+                        HorizontalAlignment="Left"
+                        Margin="10,0,0,0"
+                        Width="50"
+                        Height="30"
+                        Content="Show"/>
+                <Button Click="ButtonSave"
+                        HorizontalAlignment="Left"
+                        Margin="10,0"
+                        Width="50"
+                        Height="30"
+                        Content="Confirm"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,5,0,0"
+                    Height="770"
+                    Width="590">
+            <Border Name="Output"
+                BorderThickness="4"
+                CornerRadius="5"
+                BorderBrush="#80808080"
+                VerticalAlignment="top"
+                HorizontalAlignment="Right"
+                Margin="0,16,8,0"
+                Width="572"
+                Height="640">
+                <ScrollViewer x:Name="scrollViewer2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <Image Name="OutputImage"
+                           Height="{Binding ActualHeight, ElementName=ScrollViewer2}"
+                           Width="{Binding ActualWidth, ElementName=scrollViewer2}"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           Stretch="Uniform"/>
+                </ScrollViewer>
+            </Border>
+            <StackPanel Orientation="Horizontal">
+                <Button Click="ButtonProcess" 
+                    HorizontalAlignment="Left" 
+                    Margin="20,20" 
+                    Width="50" 
+                    Height="30"
+                    Content="Process"/>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>
